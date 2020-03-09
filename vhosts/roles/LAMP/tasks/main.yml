@@ -28,7 +28,7 @@
 
   - name: copy index.html
     template: src=templates/index.html dest=/var/www/{{ ansible_hostname }}.com/public_html/index.html
-      mode: '0644'
+      mode=0644
 
   - name: Allow apache to modify files in /var/www/{{ ansible_hostname }}.com
     sefcontext:
