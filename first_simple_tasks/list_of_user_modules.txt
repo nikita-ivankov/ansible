@@ -1,0 +1,52 @@
+avi_cloudconnectoruser                    Module for setup of CloudConnectorUser Avi RESTful Ob...
+avi_useraccountprofile                    Module for setup of UserAccountProfile Avi RESTful Ob...
+bigip_user                                Manage user accounts and user attributes on a BIG-IP.
+ce_snmp_user                              Manages SNMP user configuration on HUAWEI CloudEngine...
+cs_role                                   Manages user roles on Apache CloudStack based clouds.
+cs_user                                   Manages users on Apache CloudStack based clouds.     
+cyberark_user                             Module for CyberArk User Management using PAS Web Ser...
+ejabberd_user                             Manages users for ejabberd servers                   
+eos_user                                  Manage the collection of local users on EOS devices  
+gitlab_user                               Creates/updates/deletes Gitlab Users                 
+htpasswd                                  manage user files for basic authentication           
+iam                                       Manage IAM users, groups, roles and keys             
+iam_policy                                Manage IAM policies for users, groups, and roles     
+ios_user                                  Manage the aggregate of local users on Cisco IOS devi...
+iosxr_user                                Manage the aggregate of local users on Cisco IOS XR d...
+ipa_user                                  Manage FreeIPA users                                 
+jabber                                    Send a message to jabber user or chat room           
+junos_user                                Manage local user accounts on Juniper JUNOS devices  
+manageiq_user                             Management of users in ManageIQ.                     
+mongodb_user                              Adds or removes a user from a MongoDB database.      
+mysql_user                                Adds or removes a user from a MySQL database.        
+na_cdot_user                              useradmin configuration and management               
+na_cdot_user_role                         useradmin configuration and management               
+net_user                                  Manage the aggregate of local users on network device
+nxos_snmp_user                            Manages SNMP users for monitoring.                   
+nxos_user                                 Manage the collection of local users on Nexus devices
+os_user                                   Manage OpenStack Identity Users                      
+os_user_facts                             Retrieve facts about one or more OpenStack users     
+os_user_group                             Associate OpenStack Identity users and groups        
+os_user_role                              Associate OpenStack Identity users and roles         
+osx_defaults                              osx_defaults allows users to read, write, and delete ...
+ovirt_permissions                         Module to manage permissions of users/groups in oVirt...
+ovirt_users                               Module to manage users in oVirt/RHV                  
+ovirt_users_facts                         Retrieve facts about one or more oVirt/RHV users     
+panos_admin                               Add or modify PAN-OS user accounts password.         
+postgresql_user                           Adds or removes a users (roles) from a PostgreSQL dat...
+proxysql_mysql_users                      Adds or removes mysql users from proxysql admin inter...
+rabbitmq_user                             Adds or removes users to RabbitMQ                    
+rax_cdb_user                              create / delete a Rackspace Cloud Database           
+tower_user                                create, update, or destroy Ansible Tower user.       
+udm_user                                  Manage posix users on a univention corporate server  
+user                                      Manage user accounts                                 
+vertica_user                              Adds or removes Vertica database users and assigns ro...
+vmware_local_user_manager                 Manage local users on an ESXi host                   
+vyos_user                                 Manage the collection of local users on VyOS device  
+win_domain_user                           Manages Windows Active Directory user accounts       
+win_mapped_drive                          maps a network drive for a user                      
+win_msg                                   Sends a message to logged in users on Windows hosts. 
+win_psexec                                Runs commands (remotely) as another (privileged) user
+win_toast                                 Sends Toast windows notification to logged in users o...
+win_user                                  Manages local Windows user accounts                  
+win_user_right                            Manage Windows User Rights                           

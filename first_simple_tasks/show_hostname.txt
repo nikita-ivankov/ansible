@@ -1,0 +1,7 @@
+[ansible@control first_day]$ ansible all -m command -a "hostname" -u ansible -i inventory 
+node2.example.com | SUCCESS | rc=0 >>
+node2.example.com
+
+node1.example.com | SUCCESS | rc=0 >>
+node1.example.com
+

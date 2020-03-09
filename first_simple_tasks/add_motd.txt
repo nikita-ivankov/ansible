@@ -1,0 +1,13 @@
+[ansible@control first_day]$ ansible all -m shell -a "echo 'Hello from Ansible' > /etc/motd" -i inventory --become
+node1.example.com | SUCCESS | rc=0 >>
+
+
+node2.example.com | SUCCESS | rc=0 >>
+
+[root@node1 etc]# cat /etc/motd
+Hello from Ansible
+
+
+[root@node2 vagrant]# cat /etc/motd
+Hello from Ansible
+
