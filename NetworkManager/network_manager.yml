@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+
+  - name: Ensure that line is in the file
+    lineinfile:
+      path: /etc/default/grub
+      state: present
+      backrefs: yes
+      regexp: '^GRUB_CMDLINE_LINUX='
+      line: 'GRUB_CMDLINE_LINUX="no_timer_check console=tty0 console=ttyS0,115200n8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto"'
+    notify: grub reconfig
+  
+  - name: disable network manager
+    systemd:
+      state: stopped
+      enabled: no 
+      name: NetworkManager
+
+  handlers:
+  
+  - name: grub reconfig
+    shell: grub2-mkconfig -o /boot/grub2/grub.cfg 

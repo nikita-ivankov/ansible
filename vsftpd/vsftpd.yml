@@ -1,0 +1,63 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    anonymous_enable: yes
+    local_enable: no
+    write_enable: no
+    anon_upload_enable: yes
+
+  tasks:
+    - name: install the latest version of vsftpd
+      yum:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+       - vsftpd
+       - libselinux-python
+       - libsemanage-python
+
+    - name: Make sure a services are running
+      systemd:
+        state: restarted
+        name: vsftpd
+
+    - name: use template to copy FTP config
+      template:
+        src: template/vsftpd.j2
+        dest: /etc/vsftpd/vsftpd.conf
+
+    - name: dir attributes
+      file:
+        state: directory
+        path: /var/ftp/pub
+        mode: '755'
+        owner: nobody
+        group: nobody
+
+    - name: Allow apache to modify files in /srv/git_repos
+      sefcontext:
+        target: "/var/ftp/pub(/.*)?"
+        setype: public_content_rw_t
+        state: present
+
+    - name: Apply new SELinux file context to filesystem
+      command: restorecon -irv /var/ftp/pub
+     
+    - name: Set httpd_can_network_connect flag on and keep it persistent across reboots
+      seboolean:
+        name: ftpd_anon_write
+        state: yes
+        persistent: yes
+   
+    - name: opennig httpd service in firewall
+      firewalld:
+        service: ftp
+        permanent: yes
+        state: enabled
+
+    - name: restarting firewalld
+      systemd:
+        name: firewalld
+        state: restarted
+

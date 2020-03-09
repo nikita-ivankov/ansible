@@ -1,0 +1,40 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: install the latest version of Apache and Firewalld
+      yum:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - httpd
+        - firewalld
+
+
+    - name: Make sure a services are running
+      systemd:
+        state: started
+        name: "{{ item }}"
+      with_items:
+        - httpd
+        - firewalld
+
+    - name: copy index.html
+      template: src=templates/index.html dest=/var/www/html/index.html
+        mode=0644
+
+    - name: opennig httpd service in firewall
+      firewalld:
+        service: "{{ item }}"
+        permanent: yes
+        state: enabled
+      with_items:
+        - http
+        - https	
+
+    - name: restarting firewalld
+      systemd:
+        name: firewalld
+        state: restarted
+        

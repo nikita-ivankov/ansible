@@ -1,0 +1,39 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: remove apache
+      yum:
+        name: httpd
+        state: removed
+
+    - name: remove index.html
+      file:
+        path: /var/www/html/index.html
+        state: absent
+
+    - name: opennig httpd service in firewall
+      firewalld:
+        service: "{{ item }}"
+        permanent: yes
+        state: disabled
+      with_items:
+        - http
+        - https	
+
+    - name: restarting firewalld
+      systemd:
+        name: firewalld
+        state: restarted
+
+    - name: check if the file exist
+      stat:
+        path: /tmp/database
+      register: status_var
+
+    - name: install mariadb
+      yum:
+        name: mariadb-server
+        state: latest
+      when: status_var.stat.exists == true
