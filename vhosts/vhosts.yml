@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: getting facts
+      setup:
+        filter: ansible_hostname
+
+    - import_role:
+        name: LAMP
+
+    - import_role:
+        name: vhost      
+

@@ -1,0 +1,54 @@
+---
+  - name: install the latest version of httpd, mysql and php
+    yum:
+      name: "{{ item }}"
+      state: latest
+    with_items:
+      - httpd
+      - mariadb-server 
+      - mariadb
+      - php
+      - php-mysql
+
+  - name: Make sure a services are running
+    systemd:
+      state: started
+      name: "{{ item }}"
+    with_items:
+      - httpd
+      - mariadb
+
+  - name: Create a directory for vhost
+    file:
+      path: /var/www/{{ ansible_hostname }}.com/public_html
+      state: directory
+      mode: '0755'
+      owner: apache
+      group: apache
+
+  - name: copy index.html
+    template: src=templates/index.html dest=/var/www/{{ ansible_hostname }}.com/public_html/index.html
+      mode=0644
+
+  - name: Allow apache to modify files in /var/www/{{ ansible_hostname }}.com
+    sefcontext:
+      target: "/var/www/{{ ansible_hostname }}.com(/.*)?"
+      setype: httpd_log_t
+      state: present
+
+  - name: Apply new SELinux file context to filesystem
+    command: restorecon -irv /var/www/{{ ansible_hostname }}.com
+
+  - name: opennig httpd service in firewall
+    firewalld:
+      service: "{{ item }}"
+      permanent: yes
+      state: enabled
+    with_items:
+      - http
+      - https
+
+  - name: restarting firewalld
+    systemd:
+      name: firewalld
+      state: restarted

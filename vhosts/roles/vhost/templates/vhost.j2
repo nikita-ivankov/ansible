@@ -1,0 +1,7 @@
+<VirtualHost *:80>
+    ServerName www.{{ ansible_hostname }}.com
+    ServerAlias {{ ansible_hostname }}.com
+    DocumentRoot /var/www/{{ ansible_hostname }}.com/public_html
+    ErrorLog /var/www/{{ ansible_hostname }}.com/error.log
+    CustomLog /var/www/{{ ansible_hostname }}.com/requests.log combined
+</VirtualHost>

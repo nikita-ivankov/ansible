@@ -1,0 +1,9 @@
+---
+  - name: copy vhost file
+    template: src=templates/vhost.j2 dest=/etc/httpd/conf.d/{{ ansible_hostname }}.conf
+      mode=0644
+
+  - name: restart apache
+    systemd:
+      state: restarted
+      name: httpd
