@@ -8,7 +8,7 @@
     anon_upload_enable: yes
 
   tasks:
-    - name: install the latest version of vsftpd
+    - name: install the latest version of vsftpd and requared libs
       yum:
         name: "{{ item }}"
         state: latest
@@ -17,12 +17,12 @@
        - libselinux-python
        - libsemanage-python
 
-    - name: Make sure a services are running
+    - name: Make sure vsftpd are running
       systemd:
-        state: restarted
+        state: started
         name: vsftpd
 
-    - name: use template to copy FTP config
+    - name: copy config
       template:
         src: template/vsftpd.j2
         dest: /etc/vsftpd/vsftpd.conf
@@ -35,7 +35,7 @@
         owner: nobody
         group: nobody
 
-    - name: Allow apache to modify files in /srv/git_repos
+    - name: Allow apache to modify files in /var/ftp/pub
       sefcontext:
         target: "/var/ftp/pub(/.*)?"
         setype: public_content_rw_t
@@ -44,7 +44,7 @@
     - name: Apply new SELinux file context to filesystem
       command: restorecon -irv /var/ftp/pub
      
-    - name: Set httpd_can_network_connect flag on and keep it persistent across reboots
+    - name: set boolean yes
       seboolean:
         name: ftpd_anon_write
         state: yes
@@ -56,8 +56,11 @@
         permanent: yes
         state: enabled
 
-    - name: restarting firewalld
+    - name: restarting services
       systemd:
-        name: firewalld
+        name: "{{ item }}"
         state: restarted
+      with_items:
+        - vsftpd
+        - firewalld
 

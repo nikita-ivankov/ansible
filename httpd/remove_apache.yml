@@ -13,7 +13,7 @@
         path: /var/www/html/index.html
         state: absent
 
-    - name: opennig httpd service in firewall
+    - name: closing httpd service in firewall
       firewalld:
         service: "{{ item }}"
         permanent: yes

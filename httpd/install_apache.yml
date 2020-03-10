@@ -11,7 +11,6 @@
         - httpd
         - firewalld
 
-
     - name: Make sure a services are running
       systemd:
         state: started
